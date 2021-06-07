@@ -15,7 +15,7 @@ export default function ModalLink({onClose, data}){
     async function handleShare(){
         try{
             const result = await Share.share({
-                message: `Link:${data.link}`
+                message: `Link: ${data.link}`
             });
             if(result.action === Share.sharedAction){
                 if(result.activityType){
