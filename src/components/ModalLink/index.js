@@ -1,22 +1,50 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View, TouchableWithoutFeedback, Share } from 'react-native';
 
 import { ModalContainer, Container, Header, LinkArea, Title, LongUrl, ShortLinkArea, ShortLinkUrl } from './styles';
 import { Feather } from '@expo/vector-icons';
+import Clipboard from 'expo-clipboard';
 
-export default function ModalLink(){
+export default function ModalLink({onClose}){
+
+    
+    function copyLink(){
+        Clipboard.setString('https://seulink.com.br/qualquercoisa');
+        alert('Link copiado com sucesso!');
+    }
+    async function handleShare(){
+        try{
+            const result = await Share.share({
+                message: `Link: https://seulink.com.br/qualquercoisa`
+            });
+            if(result.action === Share.sharedAction){
+                if(result.activityType){
+                    console.log('ActivityType');
+                }else{
+                    console.log('Compartilhado com sucesso!')
+                }
+            }else if(result.action === Share.dismissedAction){
+                console.log('Modal fechado')
+            }
+        }catch(error){
+            console.log(error.message)
+        }
+    }
     return(
         <ModalContainer>
+            <TouchableWithoutFeedback onPress={onClose}>
+                <View style={{ flex:1 }}></View>
+            </TouchableWithoutFeedback>
             <Container>
                 <Header>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={onClose}>
                         <Feather
                          name="x"
                          color="#212743"
                          size={30}
                         />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleShare}> 
                         <Feather
                          name="share"
                          color="#212743"
@@ -26,10 +54,17 @@ export default function ModalLink(){
                 </Header>
                 <LinkArea>
                     <Title>Link encurtado</Title>
-                    <LongUrl>https://sujeitoprogramador.com</LongUrl>
-                    <ShortLinkArea>
-                        <ShortLinkUrl>https://bit.ly/4il1you</ShortLinkUrl>
-                        <TouchableOpacity>
+                    <LongUrl numberOfLines={1}>
+                        https://sujeitoprogramador.com
+                    </LongUrl>
+                    <ShortLinkArea
+                        activeOpacity={1}
+                        onPress={copyLink}
+                    >
+                        <ShortLinkUrl numberOfLines={1}>
+                            https://bit.ly/4il1you
+                        </ShortLinkUrl>
+                        <TouchableOpacity onPress={copyLink}>
                             <Feather
                             name="copy"
                             color="#FFF"
