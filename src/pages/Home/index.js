@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, Modal, ActivityIndicator } from 'react-native'
+import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, Modal, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import StatusBarPage from '../../components/StatusBarPage';
 import Menu from '../../components/Menu';
@@ -21,6 +21,7 @@ export default function Home(){
 
     async function handleShortLink(){
         setLoading(true);
+
         try{
             const response = await api.post('/shorten',
             {
@@ -45,7 +46,7 @@ export default function Home(){
     }
 
     return(
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <TouchableWithoutFeedback onPress={ () => Keyboard.dismiss() }>
         <LinearGradient
         colors={['#1ddbb9','#132742']}
         style={{ flex: 1, justifyContent: 'center' }}

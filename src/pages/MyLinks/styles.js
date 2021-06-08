@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { Platform } from 'react-native';
 
 export const Container = styled.View`
-flex:1;
+flex: 1;
 background-color: #132742;
 `;
 export const Title = styled.Text`
@@ -14,5 +14,13 @@ color: #FFF;
 `;
 
 export const ListLinks = styled.FlatList`
+`;
 
+export const ContainerEmpty = styled.View`
+margin-top: 15%;
+align-items: center;
+`;
+export const WarningText = styled.Text`
+font-size: 17px;
+color: #FFF;
 `;
